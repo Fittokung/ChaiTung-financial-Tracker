@@ -1,78 +1,151 @@
-import { Image, StyleSheet, Platform } from "react-native";
+import React from "react";
+import { View, Text, ScrollView, Image, StyleSheet } from "react-native";
+import { Tabs } from "expo-router";
+import { FontAwesome } from "@expo/vector-icons";
 
-import { HelloWave } from "@/components/HelloWave";
-import ParallaxScrollView from "@/components/ParallaxScrollView";
-import { ThemedText } from "@/components/ThemedText";
-import { ThemedView } from "@/components/ThemedView";
+const transactions = [
+  {
+    id: 1,
+    type: "expense",
+    title: "Coffee",
+    description: "Law Coffee",
+    amount: -80,
+    time: "09:45 AM",
+    icon: require("../../assets/images/icon.png"),
+  },
+  {
+    id: 2,
+    type: "expense",
+    title: "Food",
+    description: "KFC",
+    amount: -120,
+    time: "10:30 AM",
+    icon: require("../../assets/images/icon.png"),
+  },
+  {
+    id: 3,
+    type: "income",
+    title: "Salary",
+    description: "Monthly salary",
+    amount: 25000,
+    time: "11:00 AM",
+    icon: require("../../assets/images/icon.png"),
+  },
+];
 
 export default function HomeScreen() {
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: "#A1CEDC", dark: "#1D3D47" }}
-      headerImage={
-        <Image
-          source={require("@/assets/images/partial-react-logo.png")}
-          style={styles.reactLogo}
-        />
-      }
-    >
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Fitto!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit{" "}
-          <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText>{" "}
-          to see changes. Press{" "}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: "cmd + d",
-              android: "cmd + m",
-              web: "F12",
-            })}
-          </ThemedText>{" "}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          Tap the Explore tab to learn more about what's included in this
-          starter app.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          When you're ready, run{" "}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText>{" "}
-          to get a fresh <ThemedText type="defaultSemiBold">app</ThemedText>{" "}
-          directory. This will move the current{" "}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{" "}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+    <View style={styles.container}>
+      <Text style={styles.greeting}>Good morning, Kittiwat Yasarawan</Text>
+
+      <View style={styles.balanceBox}>
+        <Text style={styles.totalBalance}>฿24,800</Text>
+        <View style={styles.incomeExpenseRow}>
+          <Text style={styles.income}>Income: ฿25,000</Text>
+          <Text style={styles.expense}>Expense: ฿200</Text>
+        </View>
+      </View>
+
+      <Text style={styles.sectionTitle}>Transactions</Text>
+
+      <ScrollView style={styles.scrollArea}>
+        {transactions.map((item) => (
+          <View key={item.id} style={styles.transactionItem}>
+            <Image source={item.icon} style={styles.icon} />
+            <View style={{ flex: 1 }}>
+              <Text style={styles.title}>{item.title}</Text>
+              <Text style={styles.description}>{item.description}</Text>
+            </View>
+            <View style={{ alignItems: "flex-end" }}>
+              <Text
+                style={[
+                  styles.amount,
+                  { color: item.amount < 0 ? "red" : "green" },
+                ]}
+              >
+                {item.amount < 0 ? "-" : "+"}฿{Math.abs(item.amount)}
+              </Text>
+              <Text style={styles.time}>{item.time}</Text>
+            </View>
+          </View>
+        ))}
+      </ScrollView>
+
+      <Tabs />
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
+  container: {
+    flex: 1,
+    paddingTop: 50,
+    paddingHorizontal: 20,
+    backgroundColor: "#fff",
+  },
+  greeting: {
+    fontSize: 22,
+    fontWeight: "600",
+    marginBottom: 20,
+  },
+  balanceBox: {
+    backgroundColor: "#f4f4f4",
+    borderRadius: 16,
+    padding: 20,
+    marginBottom: 20,
+  },
+  totalBalance: {
+    fontSize: 32,
+    fontWeight: "bold",
+  },
+  incomeExpenseRow: {
     flexDirection: "row",
+    justifyContent: "space-between",
+    marginTop: 10,
+  },
+  income: {
+    color: "green",
+    fontSize: 16,
+  },
+  expense: {
+    color: "red",
+    fontSize: 16,
+  },
+  sectionTitle: {
+    fontSize: 20,
+    marginBottom: 10,
+    fontWeight: "500",
+  },
+  scrollArea: {
+    flex: 1,
+  },
+  transactionItem: {
+    flexDirection: "row",
+    padding: 16,
+    marginBottom: 12,
+    backgroundColor: "#f8f8f8",
+    borderRadius: 12,
     alignItems: "center",
-    gap: 8,
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
+  icon: {
+    width: 40,
+    height: 40,
+    marginRight: 16,
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: "absolute",
+  title: {
+    fontSize: 16,
+    fontWeight: "600",
+  },
+  description: {
+    fontSize: 14,
+    color: "#777",
+  },
+  amount: {
+    fontSize: 16,
+    fontWeight: "600",
+  },
+  time: {
+    fontSize: 12,
+    color: "#888",
   },
 });
