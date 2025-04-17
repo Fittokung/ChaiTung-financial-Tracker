@@ -1,4 +1,4 @@
-# 💸 Income-Expense Tracker App
+# 💸 ChaiTung(ใช้ตังค์) - Income-Expense Tracker App
 
 A mobile app for tracking your income and expenses, built using **React Native with Expo** and **TypeScript**. Currently designed for Android.
 
