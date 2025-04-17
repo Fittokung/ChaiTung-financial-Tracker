@@ -36,8 +36,9 @@ const transactions = [
 export default function HomeScreen() {
   return (
     <View style={styles.container}>
-      <Text style={styles.greeting}>Good morning, Kittiwat Yasarawan</Text>
 
+      <Text style={styles.greeting}>Good morning, Kittiwat Yasarawan</Text>
+      
       <View style={styles.balanceBox}>
         <Text style={styles.totalBalance}>฿24,800</Text>
         <View style={styles.incomeExpenseRow}>
@@ -86,6 +87,12 @@ const styles = StyleSheet.create({
   greeting: {
     fontSize: 22,
     fontWeight: "600",
+    marginBottom: 20,
+  },
+  Box: {
+    backgroundColor: "#219EBC",
+    borderRadius: 16,
+    padding: 20,
     marginBottom: 20,
   },
   balanceBox: {
