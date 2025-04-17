@@ -1,6 +1,17 @@
 import { Tabs } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 
+const icons = {
+  index: "home-outline",
+  statistic: "bar-chart-outline",
+  balance: "wallet-outline",
+  profile: "person-outline",
+  "add-expense": "remove-circle-outline",
+  "add-income": "add-circle-outline",
+} as const;
+
+type RouteName = keyof typeof icons;
+
 export default function TabLayout() {
   return (
     <Tabs
@@ -13,22 +24,9 @@ export default function TabLayout() {
           height: 60,
         },
         tabBarIcon: ({ color, size }) => {
-          const icons: Record<string, string> = {
-            index: "home-outline",
-            statistic: "bar-chart-outline",
-            balance: "wallet-outline",
-            profile: "person-outline",
-            "add-expense": "remove-circle-outline",
-            "add-income": "add-circle-outline",
-          };
+          const iconName = icons[route.name as RouteName] ?? "ellipse-outline";
 
-          return (
-            <Ionicons
-              name={icons[route.name] ?? "ellipse-outline"}
-              size={size}
-              color={color}
-            />
-          );
+          return <Ionicons name={iconName} size={size} color={color} />;
         },
       })}
     >
