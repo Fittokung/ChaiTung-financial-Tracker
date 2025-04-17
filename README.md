@@ -1,50 +1,46 @@
-# Welcome to your Expo app 👋
+# Income-Expense Tracker App 💸📊
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+แอปพลิเคชันติดตามรายรับรายจ่ายที่พัฒนาด้วย **Expo** และ **TypeScript** สำหรับผู้ใช้งาน Android (สามารถพัฒนาเพิ่มให้รองรับ iOS ได้ในอนาคต)
 
-## Get started
+## 🔧 เทคโนโลยีที่ใช้
 
-1. Install dependencies
+- React Native (ผ่าน Expo)
+- TypeScript
+- React Navigation (Bottom Tabs)
+- DateTime Picker
+- Picker Dropdown (@react-native-picker/picker)
 
+## 📱 หน้าจอที่มีในแอป
+
+- **Home**  
+  แสดงยอดเงินรวม, รายได้, ค่าใช้จ่าย และประวัติธุรกรรม
+
+- **Add Expense**  
+  เพิ่มรายการค่าใช้จ่ายใหม่ พร้อมเลือกหมวดหมู่, กรอกจำนวนเงิน, คำอธิบาย และวันที่
+
+- **Add Income**  
+  เพิ่มรายการรายได้ใหม่ รูปแบบคล้าย Add Expense
+
+- **Statistic** _(กำลังพัฒนา)_  
+  จะแสดงรายงานภาพรวมเป็นกราฟหรือแผนภูมิ
+
+- **Balance Overview** _(กำลังพัฒนา)_  
+  สรุปยอดเงิน รายได้ รายจ่าย แสดงผลแบบชัดเจน
+
+- **Profile** _(กำลังพัฒนา)_  
+  สำหรับดูข้อมูลผู้ใช้ และการตั้งค่า
+
+## ✨ ฟีเจอร์
+
+- บันทึกรายได้ / ค่าใช้จ่าย
+- เลือกหมวดหมู่ (category)
+- เลือกวันที่ผ่าน Date Picker
+- แสดงผลรายการแบบเรียงเวลา
+- รองรับการนำทางแบบ Bottom Tabs
+
+## ▶️ การเริ่มต้นใช้งาน
+
+1. ติดตั้ง Expo CLI:
    ```bash
-   npm install
+   npm install -g expo-cli
    ```
-
-2. Start the app
-
-   ```bash
-    npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
