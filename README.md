@@ -1,46 +1,73 @@
-# Income-Expense Tracker App 💸📊
+# 💸 Income-Expense Tracker App
 
-แอปพลิเคชันติดตามรายรับรายจ่ายที่พัฒนาด้วย **Expo** และ **TypeScript** สำหรับผู้ใช้งาน Android (สามารถพัฒนาเพิ่มให้รองรับ iOS ได้ในอนาคต)
+A mobile app for tracking your income and expenses, built using **React Native with Expo** and **TypeScript**. Currently designed for Android.
 
-## 🔧 เทคโนโลยีที่ใช้
+## ⚙️ Tech Stack
 
-- React Native (ผ่าน Expo)
+- React Native (via Expo)
 - TypeScript
 - React Navigation (Bottom Tabs)
 - DateTime Picker
-- Picker Dropdown (@react-native-picker/picker)
+- @react-native-picker/picker for dropdown menus
 
-## 📱 หน้าจอที่มีในแอป
+## 📱 Screens
 
-- **Home**  
-  แสดงยอดเงินรวม, รายได้, ค่าใช้จ่าย และประวัติธุรกรรม
+- **Home**
+  - Shows total balance, income, expenses, and recent transactions.
 
-- **Add Expense**  
-  เพิ่มรายการค่าใช้จ่ายใหม่ พร้อมเลือกหมวดหมู่, กรอกจำนวนเงิน, คำอธิบาย และวันที่
+- **Add Expense**
+  - Allows users to add a new expense with category, amount, date, and description.
 
-- **Add Income**  
-  เพิ่มรายการรายได้ใหม่ รูปแบบคล้าย Add Expense
+- **Add Income**
+  - Allows users to add a new income with category, amount, date, and description.
 
-- **Statistic** _(กำลังพัฒนา)_  
-  จะแสดงรายงานภาพรวมเป็นกราฟหรือแผนภูมิ
+- **Statistic** (in process)
+  - Display income/expense analytics via charts or graphs.
 
-- **Balance Overview** _(กำลังพัฒนา)_  
-  สรุปยอดเงิน รายได้ รายจ่าย แสดงผลแบบชัดเจน
+- **Balance** (in process)
+  - A summary of total income and expenses.
 
-- **Profile** _(กำลังพัฒนา)_  
-  สำหรับดูข้อมูลผู้ใช้ และการตั้งค่า
+- **Profile** (in process)
+  - Basic user information.
 
-## ✨ ฟีเจอร์
+## ✨ Features
 
-- บันทึกรายได้ / ค่าใช้จ่าย
-- เลือกหมวดหมู่ (category)
-- เลือกวันที่ผ่าน Date Picker
-- แสดงผลรายการแบบเรียงเวลา
-- รองรับการนำทางแบบ Bottom Tabs
+- Record income and expenses
+- Date picker for transaction date
+- List of transactions with icons and time
+- Simple tab-based navigation
 
-## ▶️ การเริ่มต้นใช้งาน
+## 🚀 Getting Started
 
-1. ติดตั้ง Expo CLI:
+1. Install Expo CLI (if you haven't already):
    ```bash
    npm install -g expo-cli
-   ```
+
+2. Install project dependencies:
+   ```bash
+   npm install
+
+3. Start the development server:
+   ```bash
+   npm start
+
+4. Scan the QR code with the Expo Go app to preview on your mobile device. 
+
+## 📁 Project Structure
+```
+📦 project-root
+├── app/
+│   ├── home.tsx
+│   ├── add-expense.tsx
+│   ├── add-income.tsx
+│   └── ... (Other future screens)
+├── assets/
+│   └── images/
+├── components/
+│   └── (optional shared UI components)
+├── App.tsx
+└── README.md
+```
+## 👤 Author
+Kittiwat Yasarawan
+Computer Engineering Student – Chiang Mai University
