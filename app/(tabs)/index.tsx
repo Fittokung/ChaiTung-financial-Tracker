@@ -33,12 +33,14 @@ const transactions = [
   },
 ];
 
+const formatAmount = (amount: number) =>
+  amount.toLocaleString("en-US", { minimumFractionDigits: 0 });
+
 export default function HomeScreen() {
   return (
     <View style={styles.container}>
-
       <Text style={styles.greeting}>Good morning, Kittiwat Yasarawan</Text>
-      
+
       <View style={styles.balanceBox}>
         <Text style={styles.totalBalance}>฿24,800</Text>
         <View style={styles.incomeExpenseRow}>
@@ -64,7 +66,8 @@ export default function HomeScreen() {
                   { color: item.amount < 0 ? "red" : "green" },
                 ]}
               >
-                {item.amount < 0 ? "-" : "+"}฿{Math.abs(item.amount)}
+                {item.amount < 0 ? "-" : "+"}฿
+                {formatAmount(Math.abs(item.amount))}
               </Text>
               <Text style={styles.time}>{item.time}</Text>
             </View>
@@ -96,11 +99,17 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   balanceBox: {
-    backgroundColor: "#f4f4f4",
+    backgroundColor: "#E0F7FA",
     borderRadius: 16,
     padding: 20,
     marginBottom: 20,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 5,
   },
+
   totalBalance: {
     fontSize: 32,
     fontWeight: "bold",
