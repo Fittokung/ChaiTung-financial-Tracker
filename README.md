@@ -13,18 +13,23 @@ A mobile app for tracking your income and expenses, built using **React Native w
 ## 📱 Screens
 
 - **Home**
+
   - Shows total balance, income, expenses, and recent transactions.
 
 - **Add Expense**
+
   - Allows users to add a new expense with category, amount, date, and description.
 
 - **Add Income**
+
   - Allows users to add a new income with category, amount, date, and description.
 
 - **Statistic** (in process)
+
   - Display income/expense analytics via charts or graphs.
 
 - **Balance** (in process)
+
   - A summary of total income and expenses.
 
 - **Profile** (in process)
@@ -40,20 +45,30 @@ A mobile app for tracking your income and expenses, built using **React Native w
 ## 🚀 Getting Started
 
 1. Install Expo CLI (if you haven't already):
+
    ```bash
    npm install -g expo-cli
 
+   ```
+
 2. Install project dependencies:
+
    ```bash
    npm install
 
+   ```
+
 3. Start the development server:
+
    ```bash
    npm start
 
-4. Scan the QR code with the Expo Go app to preview on your mobile device. 
+   ```
+
+4. Scan the QR code with the Expo Go app to preview on your mobile device.
 
 ## 📁 Project Structure
+
 ```
 📦 project-root
 ├── app/
@@ -68,6 +83,12 @@ A mobile app for tracking your income and expenses, built using **React Native w
 ├── App.tsx
 └── README.md
 ```
+
+## Pre-Design (using figma)
+
+![image](assets/images/predesign.PNG)
+
 ## 👤 Author
+
 Kittiwat Yasarawan
 Computer Engineering Student – Chiang Mai University
