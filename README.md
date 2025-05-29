@@ -72,15 +72,21 @@ A mobile app for tracking your income and expenses, built using **React Native w
 ```
 📦 project-root
 ├── app/
-│   ├── home.tsx
-│   ├── add-expense.tsx
-│   ├── add-income.tsx
-│   └── ... (Other future screens)
+│   ├── _layout.tsx
+│   ├── index.tsx
+│   ├── login.tsx
+│   └── (tabs)/
+│         ├── _layout.tsx
+│         ├── add-expense.tsx
+│         ├── add-income.tsx
+│         ├── balance.tsx
+│         ├── index.tsx
+│         ├── profile.tsx
+│         └── statistic.tsx
 ├── assets/
 │   └── images/
-├── components/
-│   └── (optional shared UI components)
-├── App.tsx
+├── lib/
+│   └── storage.ts
 └── README.md
 ```
 
