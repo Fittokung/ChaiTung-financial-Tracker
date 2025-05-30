@@ -4,6 +4,8 @@ import {
   Text,
   ScrollView,
   Image,
+  Button,
+  Alert,
   StyleSheet,
   TouchableOpacity,
 } from "react-native";
@@ -31,7 +33,37 @@ export default function HomeScreen() {
     fetchData();
   }, []);
 
-  
+  // ฟังก์ชันลบข้อมูลทั้งหมดและรีเซ็ต balance
+  const handleDeleteAllData = () => {
+    Alert.alert(
+      "Confirm Delete",
+      "Are you sure you want to delete all data and reset balance?",
+      [
+        { text: "Cancel", style: "cancel" },
+        {
+          text: "Delete",
+          style: "destructive",
+          onPress: async () => {
+            try {
+              await AsyncStorage.clear(); // ลบข้อมูลทั้งหมด
+              // รีเซ็ต balance และ transactions
+              setBalance(10000);
+              setTransactions([]);
+              // บันทึกค่าเริ่มต้นกลับลง storage
+              await saveData({
+                balance: 10000,
+                transactions: [],
+              });
+              Alert.alert("Success", "All data deleted and balance reset.");
+            } catch (error) {
+              Alert.alert("Error", "Failed to delete data.");
+              console.error(error);
+            }
+          },
+        },
+      ]
+    );
+  };
 
   // คำนวณรายรับ รายจ่าย จาก transactions
   const income = transactions
@@ -103,6 +135,15 @@ export default function HomeScreen() {
           ))
         )}
       </ScrollView>
+
+      {/* ปุ่มลบข้อมูลทั้งหมด */}
+      <View style={{ marginVertical: 10 }}>
+        <Button
+          title="Delete All Data and Reset Balance"
+          color="red"
+          onPress={handleDeleteAllData}
+        />
+      </View>
 
       {/* Floating Option Buttons */}
       {showOptions && (
@@ -245,5 +286,11 @@ const styles = StyleSheet.create({
   optionText: {
     fontSize: 16,
     color: "#333",
+  },
+  clearButtonContainer: {
+    position: "absolute",
+    bottom: 100,
+    right: 120,
+    alignItems: "flex-end",
   },
 });
