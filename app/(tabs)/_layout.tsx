@@ -1,5 +1,9 @@
+// _layout.tsx
+
 import { Tabs } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
+import { TouchableOpacity } from "react-native";
+import { router } from "expo-router";
 
 const icons = {
   index: "home-outline",
@@ -34,8 +38,8 @@ export default function TabLayout() {
       <Tabs.Screen name="statistic" options={{ title: "Statistic" }} />
       <Tabs.Screen name="balance" options={{ title: "Balance" }} />
       <Tabs.Screen name="profile" options={{ title: "Profile" }} />
-      <Tabs.Screen name="add-expense" options={{ title: "Add Expense" }} />
-      <Tabs.Screen name="add-income" options={{ title: "Add Income" }} />
+      {/* <Tabs.Screen name="add-expense" options={{ title: "Add Expense" }} />
+      <Tabs.Screen name="add-income" options={{ title: "Add Income" }} /> */}
     </Tabs>
   );
 }

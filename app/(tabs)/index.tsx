@@ -1,79 +1,106 @@
-import React from "react";
-import { View, Text, ScrollView, Image, StyleSheet } from "react-native";
-import { Tabs } from "expo-router";
+import { useEffect, useState } from "react";
+import { View, Text, ScrollView, Image, StyleSheet, TouchableOpacity } from "react-native";
+import { Tabs, router } from "expo-router";
 import { FontAwesome } from "@expo/vector-icons";
-
-const transactions = [
-  {
-    id: 1,
-    type: "expense",
-    title: "Coffee",
-    description: "Law Coffee",
-    amount: -80,
-    time: "09:45 AM",
-    icon: require("../../assets/images/icon.png"),
-  },
-  {
-    id: 2,
-    type: "expense",
-    title: "Food",
-    description: "KFC",
-    amount: -120,
-    time: "10:30 AM",
-    icon: require("../../assets/images/icon.png"),
-  },
-  {
-    id: 3,
-    type: "income",
-    title: "Salary",
-    description: "Monthly salary",
-    amount: 25000,
-    time: "11:00 AM",
-    icon: require("../../assets/images/icon.png"),
-  },
-];
+import { getData, Transaction, saveData } from "@/lib/storage";
 
 const formatAmount = (amount: number) =>
   amount.toLocaleString("en-US", { minimumFractionDigits: 0 });
 
 export default function HomeScreen() {
+  const [showOptions, setShowOptions] = useState(false);
+  const [balance, setBalance] = useState(10000);
+  const [transactions, setTransactions] = useState<Transaction[]>([]);
+
+  // โหลดข้อมูล balance และ transactions จาก storage ตอนเริ่มต้น
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await getData();
+      setBalance(data.balance);
+      setTransactions(data.transactions);
+    };
+    fetchData();
+  }, []);
+
+  // คำนวณรายรับ รายจ่าย จาก transactions
+  const income = transactions
+    .filter((t) => t.type === "income")
+    .reduce((acc, cur) => acc + cur.amount, 0);
+
+  const expense = transactions
+    .filter((t) => t.type === "expense")
+    .reduce((acc, cur) => acc + Math.abs(cur.amount), 0);
+
+  // ฟังก์ชันไปหน้าเพิ่มรายจ่าย
+  const handleAddExpense = () => {
+    setShowOptions(false);
+    router.push("/add-expense");
+  };
+
+  // ฟังก์ชันไปหน้าเพิ่มรายรับ
+  const handleAddIncome = () => {
+    setShowOptions(false);
+    router.push("/add-income");
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.greeting}>Good morning, Kittiwat Yasarawan</Text>
 
       <View style={styles.balanceBox}>
-        <Text style={styles.totalBalance}>฿24,800</Text>
+        <Text style={styles.totalBalance}>฿{formatAmount(balance)}</Text>
         <View style={styles.incomeExpenseRow}>
-          <Text style={styles.income}>Income: ฿25,000</Text>
-          <Text style={styles.expense}>Expense: ฿200</Text>
+          <Text style={styles.income}>Income: ฿{formatAmount(income)}</Text>
+          <Text style={styles.expense}>Expense: ฿{formatAmount(expense)}</Text>
         </View>
       </View>
 
       <Text style={styles.sectionTitle}>Transactions</Text>
 
       <ScrollView style={styles.scrollArea}>
-        {transactions.map((item) => (
-          <View key={item.id} style={styles.transactionItem}>
-            <Image source={item.icon} style={styles.icon} />
-            <View style={{ flex: 1 }}>
-              <Text style={styles.title}>{item.title}</Text>
-              <Text style={styles.description}>{item.description}</Text>
+        {transactions.length === 0 ? (
+          <Text style={{ textAlign: "center", color: "#888" }}>No transactions yet.</Text>
+        ) : (
+          transactions.map((item) => (
+            <View key={item.id} style={styles.transactionItem}>
+              <Image source={require("../../assets/images/icon.png")} style={styles.icon} />
+              <View style={{ flex: 1 }}>
+                <Text style={styles.title}>{item.title}</Text>
+                <Text style={styles.description}>{item.description}</Text>
+              </View>
+
+              <View style={{ alignItems: "flex-end" }}>
+                <Text
+                  style={[
+                    styles.amount,
+                    { color: item.type === "expense" ? "red" : "green" },
+                  ]}
+                >
+                  {item.type === "expense" ? "-" : "+"}฿{formatAmount(Math.abs(item.amount))}
+                </Text>
+                <Text style={styles.time}>{item.time}</Text>
+              </View>
             </View>
-            <View style={{ alignItems: "flex-end" }}>
-              <Text
-                style={[
-                  styles.amount,
-                  { color: item.amount < 0 ? "red" : "green" },
-                ]}
-              >
-                {item.amount < 0 ? "-" : "+"}฿
-                {formatAmount(Math.abs(item.amount))}
-              </Text>
-              <Text style={styles.time}>{item.time}</Text>
-            </View>
-          </View>
-        ))}
+          ))
+        )}
       </ScrollView>
+
+      {/* Floating Option Buttons */}
+      {showOptions && (
+        <View style={styles.optionContainer}>
+          <TouchableOpacity style={styles.optionButton} onPress={handleAddExpense}>
+            <Text style={styles.optionText}>+ Expense</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.optionButton} onPress={handleAddIncome}>
+            <Text style={styles.optionText}>+ Income</Text>
+          </TouchableOpacity>
+        </View>
+      )}
+
+      {/* Floating Action Button */}
+      <TouchableOpacity style={styles.fab} onPress={() => setShowOptions(!showOptions)}>
+        <FontAwesome name="plus" size={24} color="#fff" />
+      </TouchableOpacity>
 
       <Tabs />
     </View>
@@ -81,6 +108,7 @@ export default function HomeScreen() {
 }
 
 const styles = StyleSheet.create({
+  // ... styles เดิมของคุณ ไม่ต้องเปลี่ยน
   container: {
     flex: 1,
     paddingTop: 50,
@@ -90,12 +118,6 @@ const styles = StyleSheet.create({
   greeting: {
     fontSize: 22,
     fontWeight: "600",
-    marginBottom: 20,
-  },
-  Box: {
-    backgroundColor: "#219EBC",
-    borderRadius: 16,
-    padding: 20,
     marginBottom: 20,
   },
   balanceBox: {
@@ -109,7 +131,6 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
   },
-
   totalBalance: {
     fontSize: 32,
     fontWeight: "bold",
@@ -163,5 +184,39 @@ const styles = StyleSheet.create({
   time: {
     fontSize: 12,
     color: "#888",
+  },
+  fab: {
+    position: "absolute",
+    bottom: 30,
+    right: 20,
+    backgroundColor: "#007AFF",
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    justifyContent: "center",
+    alignItems: "center",
+    elevation: 5,
+  },
+  optionContainer: {
+    position: "absolute",
+    bottom: 100,
+    right: 20,
+    alignItems: "flex-end",
+  },
+  optionButton: {
+    backgroundColor: "#fff",
+    paddingVertical: 10,
+    paddingHorizontal: 16,
+    borderRadius: 10,
+    marginBottom: 10,
+    elevation: 3,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.15,
+    shadowRadius: 4,
+  },
+  optionText: {
+    fontSize: 16,
+    color: "#333",
   },
 });
