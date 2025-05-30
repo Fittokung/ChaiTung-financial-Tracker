@@ -1,8 +1,17 @@
 import { useEffect, useState } from "react";
-import { View, Text, ScrollView, Image, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  ScrollView,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native";
 import { Tabs, router } from "expo-router";
 import { FontAwesome } from "@expo/vector-icons";
 import { getData, Transaction, saveData } from "@/lib/storage";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { format } from "date-fns";
 
 const formatAmount = (amount: number) =>
   amount.toLocaleString("en-US", { minimumFractionDigits: 0 });
@@ -21,6 +30,8 @@ export default function HomeScreen() {
     };
     fetchData();
   }, []);
+
+  
 
   // คำนวณรายรับ รายจ่าย จาก transactions
   const income = transactions
@@ -59,11 +70,16 @@ export default function HomeScreen() {
 
       <ScrollView style={styles.scrollArea}>
         {transactions.length === 0 ? (
-          <Text style={{ textAlign: "center", color: "#888" }}>No transactions yet.</Text>
+          <Text style={{ textAlign: "center", color: "#888" }}>
+            No transactions yet.
+          </Text>
         ) : (
           transactions.map((item) => (
             <View key={item.id} style={styles.transactionItem}>
-              <Image source={require("../../assets/images/icon.png")} style={styles.icon} />
+              <Image
+                source={require("../../assets/images/icon.png")}
+                style={styles.icon}
+              />
               <View style={{ flex: 1 }}>
                 <Text style={styles.title}>{item.title}</Text>
                 <Text style={styles.description}>{item.description}</Text>
@@ -76,9 +92,12 @@ export default function HomeScreen() {
                     { color: item.type === "expense" ? "red" : "green" },
                   ]}
                 >
-                  {item.type === "expense" ? "-" : "+"}฿{formatAmount(Math.abs(item.amount))}
+                  {item.type === "expense" ? "-" : "+"}฿
+                  {formatAmount(Math.abs(item.amount))}
                 </Text>
-                <Text style={styles.time}>{item.time}</Text>
+                <Text style={styles.time}>
+                  {format(new Date(item.time), "dd/MM/yyyy")}
+                </Text>
               </View>
             </View>
           ))
@@ -88,17 +107,26 @@ export default function HomeScreen() {
       {/* Floating Option Buttons */}
       {showOptions && (
         <View style={styles.optionContainer}>
-          <TouchableOpacity style={styles.optionButton} onPress={handleAddExpense}>
+          <TouchableOpacity
+            style={styles.optionButton}
+            onPress={handleAddExpense}
+          >
             <Text style={styles.optionText}>+ Expense</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.optionButton} onPress={handleAddIncome}>
+          <TouchableOpacity
+            style={styles.optionButton}
+            onPress={handleAddIncome}
+          >
             <Text style={styles.optionText}>+ Income</Text>
           </TouchableOpacity>
         </View>
       )}
 
       {/* Floating Action Button */}
-      <TouchableOpacity style={styles.fab} onPress={() => setShowOptions(!showOptions)}>
+      <TouchableOpacity
+        style={styles.fab}
+        onPress={() => setShowOptions(!showOptions)}
+      >
         <FontAwesome name="plus" size={24} color="#fff" />
       </TouchableOpacity>
 
@@ -108,7 +136,6 @@ export default function HomeScreen() {
 }
 
 const styles = StyleSheet.create({
-  // ... styles เดิมของคุณ ไม่ต้องเปลี่ยน
   container: {
     flex: 1,
     paddingTop: 50,

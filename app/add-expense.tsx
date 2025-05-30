@@ -1,4 +1,3 @@
-// add-expense.tsx
 import React, { useState } from "react";
 import {
   View,
@@ -6,7 +5,9 @@ import {
   TextInput,
   StyleSheet,
   TouchableOpacity,
+  Platform,
 } from "react-native";
+import DateTimePicker from "@react-native-community/datetimepicker";
 import Header from "../components/Header";
 import { addTransaction } from "@/lib/storage";
 import { router } from "expo-router";
@@ -14,23 +15,25 @@ import { router } from "expo-router";
 export default function AddExpenseScreen() {
   const [category, setCategory] = useState("");
   const [amount, setAmount] = useState("");
-  const [date, setDate] = useState("");
   const [description, setDescription] = useState("");
+  const [date, setDate] = useState(new Date());
+  const [showDatePicker, setShowDatePicker] = useState(false);
 
-  const handleSave = () => {
-    console.log("Expense saved:", { category, amount, date, description });
-    // Add save logic here (e.g., AsyncStorage or global state)
-  };
+  const handleSave = async () => {
+    if (!category || !amount || isNaN(Number(amount))) {
+      alert("Please fill in a valid category and amount.");
+      return;
+    }
 
-  const handleSubmit = async () => {
     await addTransaction({
       id: Date.now(),
       type: "expense",
-      title: "Coffee",
-      description: "Law Coffee",
-      amount: 80,
-      time: new Date().toISOString(),
+      title: category,
+      description: description || "-",
+      amount: Number(amount),
+      time: date.toISOString(),
     });
+
     router.push("/(tabs)");
   };
 
@@ -57,12 +60,27 @@ export default function AddExpenseScreen() {
         />
 
         <Text style={styles.label}>Date</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="YYYY-MM-DD"
-          value={date}
-          onChangeText={setDate}
-        />
+        <TouchableOpacity onPress={() => setShowDatePicker(true)}>
+          <TextInput
+            style={styles.input}
+            value={date.toISOString().split("T")[0]}
+            editable={false}
+          />
+        </TouchableOpacity>
+
+        {showDatePicker && (
+          <DateTimePicker
+            value={date}
+            mode="date"
+            display={Platform.OS === "ios" ? "spinner" : "default"}
+            onChange={(event, selectedDate) => {
+              setShowDatePicker(false);
+              if (selectedDate) {
+                setDate(selectedDate);
+              }
+            }}
+          />
+        )}
 
         <Text style={styles.label}>Description</Text>
         <TextInput
