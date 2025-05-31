@@ -1,4 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
+import { useFocusEffect } from "@react-navigation/native";
+
 import {
   View,
   Text,
@@ -104,9 +106,25 @@ export default function HomeScreen() {
     router.push("/add-income");
   };
 
+  const [profileName, setProfileName] = useState("");
+
+  useFocusEffect(
+    useCallback(() => {
+      const fetchName = async () => {
+        const storedName = await AsyncStorage.getItem("profile_name");
+        if (storedName) {
+          setProfileName(storedName);
+        }
+      };
+      fetchName();
+    }, [])
+  );
+
   return (
     <View style={styles.container}>
-      <Text style={styles.greeting}>Good morning, Kittiwat Yasarawan</Text>
+      <Text style={styles.greeting}>
+        Good morning{profileName ? `, ${profileName}` : ""}
+      </Text>
 
       <View style={styles.balanceBox}>
         <Text style={styles.totalBalance}>฿{formatAmount(balance)}</Text>
