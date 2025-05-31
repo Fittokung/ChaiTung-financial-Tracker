@@ -10,6 +10,7 @@ export interface Transaction {
   description: string;
   amount: number;
   time: string;
+  category: string;
 }
 
 export interface ChaiTungData {

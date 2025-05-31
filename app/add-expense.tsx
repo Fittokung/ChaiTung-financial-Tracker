@@ -11,9 +11,22 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import Header from "../components/Header";
 import { addTransaction } from "@/lib/storage";
 import { router } from "expo-router";
+import { Picker } from "@react-native-picker/picker";
+
+const expenseCategories = [
+  "Food",
+  "Drink",
+  "Coffee",
+  "Shopping",
+  "Traveling",
+  "Clothes",
+  "Desert",
+  "Appliance",
+  "Transportation",
+];
 
 export default function AddExpenseScreen() {
-  const [category, setCategory] = useState("");
+  const [category, setCategory] = useState(expenseCategories[0]);
   const [amount, setAmount] = useState("");
   const [description, setDescription] = useState("");
   const [date, setDate] = useState(new Date());
@@ -32,6 +45,7 @@ export default function AddExpenseScreen() {
       description: description || "-",
       amount: Number(amount),
       time: date.toISOString(),
+      category: category,
     });
 
     router.push("/(tabs)");
@@ -43,12 +57,16 @@ export default function AddExpenseScreen() {
 
       <View style={styles.form}>
         <Text style={styles.label}>Category</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="e.g. Food, Transport"
-          value={category}
-          onChangeText={setCategory}
-        />
+        <View style={styles.pickerWrapper}>
+          <Picker
+            selectedValue={category}
+            onValueChange={(itemValue) => setCategory(itemValue)}
+          >
+            {expenseCategories.map((cat) => (
+              <Picker.Item label={cat} value={cat} key={cat} />
+            ))}
+          </Picker>
+        </View>
 
         <Text style={styles.label}>Amount</Text>
         <TextInput
@@ -129,5 +147,12 @@ const styles = StyleSheet.create({
   buttonText: {
     color: "#fff",
     fontWeight: "bold",
+  },
+  pickerWrapper: {
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 8,
+    marginBottom: 15,
+    overflow: "hidden",
   },
 });

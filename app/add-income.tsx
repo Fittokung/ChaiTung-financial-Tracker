@@ -11,6 +11,9 @@ import Header from "../components/Header";
 import { addTransaction } from "@/lib/storage";
 import { router } from "expo-router";
 import DateTimePicker from "@react-native-community/datetimepicker";
+import { Picker } from "@react-native-picker/picker";
+
+const incomeCategories = ["Salary", "Part-time", "Investment"];
 
 export default function AddIncomeScreen() {
   const [category, setCategory] = useState("");
@@ -32,6 +35,7 @@ export default function AddIncomeScreen() {
       description: description || "-",
       amount: Number(amount),
       time: date.toISOString(),
+      category: category,
     });
 
     router.push("/(tabs)");
@@ -43,12 +47,16 @@ export default function AddIncomeScreen() {
 
       <View style={styles.form}>
         <Text style={styles.label}>Category</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="e.g. Salary, Bonus"
-          value={category}
-          onChangeText={setCategory}
-        />
+        <View style={styles.pickerWrapper}>
+          <Picker
+            selectedValue={category}
+            onValueChange={(itemValue) => setCategory(itemValue)}
+          >
+            {incomeCategories.map((cat) => (
+              <Picker.Item label={cat} value={cat} key={cat} />
+            ))}
+          </Picker>
+        </View>
 
         <Text style={styles.label}>Amount</Text>
         <TextInput
@@ -129,5 +137,12 @@ const styles = StyleSheet.create({
   buttonText: {
     color: "#fff",
     fontWeight: "bold",
+  },
+  pickerWrapper: {
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 8,
+    marginBottom: 15,
+    overflow: "hidden",
   },
 });
