@@ -13,7 +13,7 @@ import { router } from "expo-router";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { Picker } from "@react-native-picker/picker";
 
-const incomeCategories = ["Salary", "Part-time", "Investment"];
+const incomeCategories = ["Salary", "Investment"];
 
 export default function AddIncomeScreen() {
   const [category, setCategory] = useState("");

@@ -10,6 +10,8 @@ import {
 import DateTimePicker from "@react-native-community/datetimepicker";
 import Header from "../components/Header";
 import { addTransaction } from "@/lib/storage";
+import { categories } from "@/lib/categoryData";
+
 import { router } from "expo-router";
 import { Picker } from "@react-native-picker/picker";
 
@@ -57,14 +59,17 @@ export default function AddExpenseScreen() {
 
       <View style={styles.form}>
         <Text style={styles.label}>Category</Text>
-        <View style={styles.pickerWrapper}>
+        <View style={styles.pickerContainer}>
           <Picker
             selectedValue={category}
             onValueChange={(itemValue) => setCategory(itemValue)}
           >
-            {expenseCategories.map((cat) => (
-              <Picker.Item label={cat} value={cat} key={cat} />
-            ))}
+            <Picker.Item label="Select a category..." value="" />
+            {categories
+              .filter((cat) => cat.type === "expense")
+              .map((cat) => (
+                <Picker.Item key={cat.name} label={cat.name} value={cat.name} />
+              ))}
           </Picker>
         </View>
 
@@ -149,6 +154,13 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   pickerWrapper: {
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 8,
+    marginBottom: 15,
+    overflow: "hidden",
+  },
+  pickerContainer: {
     borderWidth: 1,
     borderColor: "#ccc",
     borderRadius: 8,

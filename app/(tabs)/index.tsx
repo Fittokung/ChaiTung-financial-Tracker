@@ -18,6 +18,24 @@ import { format } from "date-fns";
 const formatAmount = (amount: number) =>
   amount.toLocaleString("en-US", { minimumFractionDigits: 0 });
 
+const iconMap: { [key: string]: any } = {
+  Food: require("../../assets/icons/food.png"),
+  Drink: require("../../assets/icons/drink.png"),
+  Coffee: require("../../assets/icons/coffee.png"),
+  Shopping: require("../../assets/icons/shopping.png"),
+  Traveling: require("../../assets/icons/traveling.png"),
+  Clothes: require("../../assets/icons/clothes.png"),
+  Dessert: require("../../assets/icons/dessert.png"),
+  Appliance: require("../../assets/icons/appliance.png"),
+  Transportation: require("../../assets/icons/transportation.png"),
+  Salary: require("../../assets/icons/salary.png"),
+  Investment: require("../../assets/icons/investment.png"),
+};
+
+const getIconForTransaction = (category: string) => {
+  return iconMap[category] || require("../../assets/images/icon.png");
+};
+
 export default function HomeScreen() {
   const [showOptions, setShowOptions] = useState(false);
   const [balance, setBalance] = useState(10000);
@@ -109,7 +127,7 @@ export default function HomeScreen() {
           transactions.map((item) => (
             <View key={item.id} style={styles.transactionItem}>
               <Image
-                source={require("../../assets/images/icon.png")}
+                source={getIconForTransaction(item.category)}
                 style={styles.icon}
               />
               <View style={{ flex: 1 }}>
