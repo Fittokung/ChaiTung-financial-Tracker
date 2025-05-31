@@ -137,39 +137,45 @@ export default function HomeScreen() {
       <Text style={styles.sectionTitle}>Transactions</Text>
 
       <ScrollView style={styles.scrollArea}>
-        {transactions.length === 0 ? (
-          <Text style={{ textAlign: "center", color: "#888" }}>
-            No transactions yet.
-          </Text>
-        ) : (
-          transactions.map((item) => (
-            <View key={item.id} style={styles.transactionItem}>
-              <Image
-                source={getIconForTransaction(item.category)}
-                style={styles.icon}
-              />
-              <View style={{ flex: 1 }}>
-                <Text style={styles.title}>{item.title}</Text>
-                <Text style={styles.description}>{item.description}</Text>
-              </View>
+        {Object.entries(
+          transactions.reduce((acc, transaction) => {
+            const dateKey = format(new Date(transaction.time), "dd/MM/yyyy");
+            if (!acc[dateKey]) acc[dateKey] = [];
+            acc[dateKey].push(transaction);
+            return acc;
+          }, {} as { [date: string]: Transaction[] })
+        ).map(([date, items]) => (
+          <View key={date}>
+            <Text style={styles.dateHeader}>{date}</Text>
+            {items.map((item) => (
+              <View key={item.id} style={styles.transactionItem}>
+                <Image
+                  source={getIconForTransaction(item.category)}
+                  style={styles.icon}
+                />
+                <View style={{ flex: 1 }}>
+                  <Text style={styles.title}>{item.title}</Text>
+                  <Text style={styles.description}>{item.description}</Text>
+                </View>
 
-              <View style={{ alignItems: "flex-end" }}>
-                <Text
-                  style={[
-                    styles.amount,
-                    { color: item.type === "expense" ? "red" : "green" },
-                  ]}
-                >
-                  {item.type === "expense" ? "-" : "+"}฿
-                  {formatAmount(Math.abs(item.amount))}
-                </Text>
-                <Text style={styles.time}>
-                  {format(new Date(item.time), "dd/MM/yyyy")}
-                </Text>
+                <View style={{ alignItems: "flex-end" }}>
+                  <Text
+                    style={[
+                      styles.amount,
+                      { color: item.type === "expense" ? "red" : "green" },
+                    ]}
+                  >
+                    {item.type === "expense" ? "-" : "+"}฿
+                    {formatAmount(Math.abs(item.amount))}
+                  </Text>
+                  <Text style={styles.time}>
+                    {format(new Date(item.time), "HH:mm")}
+                  </Text>
+                </View>
               </View>
-            </View>
-          ))
-        )}
+            ))}
+          </View>
+        ))}
       </ScrollView>
 
       {/* ปุ่มลบข้อมูลทั้งหมด */}
@@ -328,5 +334,12 @@ const styles = StyleSheet.create({
     bottom: 100,
     right: 120,
     alignItems: "flex-end",
+  },
+  dateHeader: {
+    fontSize: 16,
+    fontWeight: "700",
+    marginTop: 16,
+    marginBottom: 8,
+    color: "#555",
   },
 });
