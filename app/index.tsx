@@ -5,7 +5,6 @@ import React, { useEffect } from "react";
 import { View, Text, StyleSheet, ActivityIndicator } from "react-native";
 import { useRouter } from "expo-router";
 
-
 export default function SplashScreen() {
   const router = useRouter();
 

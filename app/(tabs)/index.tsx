@@ -1,3 +1,4 @@
+// app/(tabs)/index.tsx
 import { useEffect, useState, useCallback } from "react";
 import { useFocusEffect } from "@react-navigation/native";
 
