@@ -6,7 +6,7 @@ import { BarChart, PieChart } from "react-native-chart-kit";
 import { Picker } from "@react-native-picker/picker";
 import { format } from "date-fns";
 import { th } from "date-fns/locale"; // สำหรับภาษาไทย
-import { useTransactions } from "../../hooks/useTransactions"; // ใช้ hook ที่แก้ไขแล้ว
+import { useTransactions } from "../../hooks/useTransactions";
 
 const screenWidth = Dimensions.get("window").width;
 
@@ -122,7 +122,7 @@ export default function StatisticScreen() {
           width={screenWidth - 32}
           height={220}
           yAxisLabel="฿"
-          yAxisSuffix="" // <-- เพิ่มบรรทัดนี้
+          yAxisSuffix="" 
           chartConfig={{
             ...chartConfig,
             color: (opacity = 1) => `rgba(76, 175, 80, ${opacity})`,
@@ -153,7 +153,7 @@ export default function StatisticScreen() {
           width={screenWidth - 32}
           height={220}
           yAxisLabel="฿"
-          yAxisSuffix="" // <-- เพิ่มบรรทัดนี้
+          yAxisSuffix="" 
           chartConfig={{
             ...chartConfig,
             color: (opacity = 1) => `rgba(244, 67, 54, ${opacity})`,
