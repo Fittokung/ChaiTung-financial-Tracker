@@ -1,20 +1,23 @@
 # 💸 ChaiTung(ใช้ตังค์) - Income-Expense Tracker App
 
-A mobile app for tracking your income and expenses, built using **React Native with Expo** and **TypeScript**. Currently designed for Android.
+ChaiTung is a mobile application designed to help you track your income and expenses. Built with **React Native** (via Expo) and **TypeScript**, it offers an user-friendly experience (currently optimized for Android).
 
 ## ⚙️ Tech Stack
 
-- React Native (via Expo)
-- TypeScript
-- React Navigation (Bottom Tabs)
-- DateTime Picker
-- @react-native-picker/picker for dropdown menus
+- React Native (via Expo): The core framework for building the cross-platform app.
+- TypeScript: Enhances code quality with static type checking.
+- Expo Router: A routing solution for navigating within the app.
+- React Navigation (Bottom Tabs): Provides an intuitive tab-based navigation experience.
+- DateTime Picker: A component for easy date selection.
+- @react-native-picker/picker: A component for dropdown menus
+- react-native-chart-kit: A component for analytical charts and graphs for financial insights.
+- date-fns: A library for efficient date and time manipulation.
 
-## 📱 Screens
+## 📱 Screens & Functionality
 
 - **Home**
 
-  - Shows total balance, income, expenses, and recent transactions.
+  - Get a quick overview of your total balance, total income, total expenses, and recent transactions.
 
 - **Add Expense**
 
@@ -24,23 +27,23 @@ A mobile app for tracking your income and expenses, built using **React Native w
 
   - Allows users to add a new income with category, amount, date, and description.
 
-- **Statistic** (in process)
+- **Statistic**
 
-  - Display income/expense analytics via charts or graphs.
+  - Visualize your financial trends with monthly bar charts for income and expenses.
 
-- **Balance** (in process)
+- **Balance**
 
-  - A summary of total income and expenses.
+  - View a summary of your total account balance. This screen also allows you to filter and sort your transactions by category, making it easy to find specific entries.
 
-- **Profile** (in process)
+- **Profile**
   - Basic user information.
 
 ## ✨ Features
 
-- Record income and expenses
-- Date picker for transaction date
-- List of transactions with icons and time
-- Simple tab-based navigation
+- Record income and expense transactions in detail.
+- Convenient date picker for selecting transaction dates.
+- Clear display of transaction lists, complete with category icons and timestamps.
+- Simple tab-based navigation for a smooth user experience.
 
 ## 🚀 Getting Started
 
@@ -72,21 +75,25 @@ A mobile app for tracking your income and expenses, built using **React Native w
 ```
 📦 project-root
 ├── app/
-│   ├── _layout.tsx
-│   ├── index.tsx
-│   ├── login.tsx
-│   └── (tabs)/
-│         ├── _layout.tsx
-│         ├── add-expense.tsx
-│         ├── add-income.tsx
-│         ├── balance.tsx
-│         ├── index.tsx
-│         ├── profile.tsx
-│         └── statistic.tsx
+│   ├── _layout.tsx           // โครงสร้างหลักของแอปและการจัดการ Routing
+│   ├── index.tsx             // หน้าจอเริ่มต้น (หน้า Welcome)
+│   ├── login.tsx             // หน้าจอเข้าสู่ระบบ
+│   ├── add-expense.tsx       // หน้าเพิ่มรายจ่าย
+│   ├── add-income.tsx        // หน้าเพิ่มรายรับ
+│   └── (tabs)/               // Tab Bar
+│         ├── _layout.tsx     // Layout ของ Tab Bar
+│         ├── balance.tsx     // หน้าสรุปยอดเงินและรายการธุรกรรม (มีระบบ sorting)
+│         ├── index.tsx       // หน้า Home (Dashboard)
+│         ├── profile.tsx     // หน้า Profile
+│         └── statistic.tsx   // หน้าสถิติและกราฟ
 ├── assets/
-│   └── images/
-├── lib/
-│   └── storage.ts
+│   ├── images/               // รูปภาพ
+│   └── icons/                // ไอคอน
+├── hooks/                    // Custom Hooks
+│   └── useTransactions.ts    // Hook สำหรับจัดการ Transaction และ Balance
+├── lib/                      // Library/Utilities
+│   ├── categoryData.ts       // ข้อมูล Category และไอคอน
+│   └── storage.ts            // ระบบจัดการข้อมูล AsyncStorage
 └── README.md
 ```
 
